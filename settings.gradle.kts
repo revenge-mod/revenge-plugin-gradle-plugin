@@ -1,1 +1,1 @@
-rootProject.name = "revanced-patches-gradle-plugin"
+rootProject.name = "revenge-plugin-gradle-plugin"

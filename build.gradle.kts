@@ -8,7 +8,7 @@ plugins {
     signing
 }
 
-group = "app.revanced"
+group = "io.github.revenge"
 
 repositories {
     mavenCentral()
@@ -18,7 +18,7 @@ repositories {
 dependencies {
     implementation(libs.android.application)
     implementation(libs.binary.compatibility.validator)
-    implementation(libs.guava)
+    implementation(libs.node.gradle.node)
     implementation(libs.kotlin)
     implementation(libs.kotlin.android)
 
@@ -41,16 +41,15 @@ kotlin {
 }
 
 gradlePlugin {
-    website = "https://revanced.app"
-    vcsUrl = "ssh://git@github.com:revanced/revanced-patches-gradle-plugin.git"
+    vcsUrl = "ssh://git@github.com:revenge-mod/revenge-plugin-gradle-plugin.git"
 
     plugins {
         create("patchesSettingsPlugin") {
             id = "app.revanced.patches"
             implementationClass = "app.revanced.patches.gradle.SettingsPlugin"
             version = version
-            description = "Plugin to configure a ReVanced Patches project."
-            displayName = "ReVanced Patches Gradle settings plugin"
+            description = "Plugin to configure a Revenge plugin project."
+            displayName = "Revenge plugin Gradle settings plugin"
         }
     }
 }
@@ -59,7 +58,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/revanced/revanced-patches-gradle-plugin")
+            url = uri("https://maven.pkg.github.com/revenge-mod/revenge-plugin-gradle-plugin")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")

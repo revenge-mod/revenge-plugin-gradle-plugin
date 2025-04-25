@@ -23,8 +23,7 @@
         "assets": [
           "README.md",
           "CHANGELOG.md",
-          "gradle.properties",
-          "patches.json"
+          "gradle.properties"
         ],
         "message": "chore: Release v${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }

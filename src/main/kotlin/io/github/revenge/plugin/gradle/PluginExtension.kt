@@ -1,15 +1,6 @@
-package app.revanced.patches.gradle
+package io.github.revenge.plugin.gradle
 
-open class PatchesExtension {
-    /**
-     * The path to the extensions project relative to the root project.
-     *
-     * Used by the patches plugin to consume the extension artifacts.
-     *
-     * Defaults to `:extensions`.
-     */
-    var extensionsProjectPath: String? = ":extensions"
-
+open class PluginExtension {
     /**
      * About information for the project.
      */
@@ -22,7 +13,7 @@ open class PatchesExtension {
     /**
      * About information for the project.
      *
-     * Used by the patches plugin to create the manifest file and set up the publication of the patches project.
+     * Used by the plugin project to create the manifest file.
      */
     class About {
         var name: String? = null

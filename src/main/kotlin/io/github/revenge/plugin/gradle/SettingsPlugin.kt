@@ -1,0 +1,58 @@
+package io.github.revenge.plugin.gradle
+
+import org.gradle.api.Plugin
+import org.gradle.api.initialization.Settings
+import org.gradle.api.model.ObjectFactory
+import java.net.URI
+import javax.inject.Inject
+import kotlin.jvm.java
+
+@Suppress("unused")
+abstract class SettingsPlugin @Inject constructor(
+    private val objectFactory: ObjectFactory,
+) : Plugin<Settings> {
+    override fun apply(settings: Settings) {
+        settings.configureDependencies()
+        settings.configureProjects()
+    }
+
+    /**
+     * Add required repositories.
+     */
+    private fun Settings.configureDependencies() {
+        @Suppress("UnstableApiUsage")
+        dependencyResolutionManagement.repositories.apply {
+            mavenCentral()
+            google()
+            maven { repository ->
+                // A repository must be specified. "registry" is a dummy.
+                repository.url = URI("https://maven.pkg.github.com/revenge-mod/registry")
+                repository.credentials {
+                    it.username = providers.gradleProperty("gpr.user").orNull ?: System.getenv("GITHUB_ACTOR")
+                    it.password = providers.gradleProperty("gpr.key").orNull ?: System.getenv("GITHUB_TOKEN")
+                }
+            }
+        }
+    }
+
+    /**
+     * Adds the required plugins to the projects.
+     */
+    private fun Settings.configureProjects() {
+        // region Include the projects
+
+        include("js")
+        include("native")
+
+        // endregion
+
+        // region Apply the plugins
+
+        gradle.rootProject { rootProject ->
+            rootProject.project("js").pluginManager.apply(JsPlugin::class.java)
+            rootProject.project("native").pluginManager.apply(NativePlugin::class.java)
+        }
+
+        // endregion
+    }
+}
